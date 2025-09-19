@@ -11,7 +11,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { CookieGetter } from 'src/common/decorator/cookie-getter.decorator';
 import { GetRequestUser } from 'src/common/decorator/get-request.user.decorator';
@@ -41,6 +41,9 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN)
   @Post('admin')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'Admin qo`shish'
+    })
   createAdmin(@Body() userAdminDto: CreateUserDto) {
     return this.userService.createUser(userAdminDto, Roles.ADMIN);
   }
@@ -49,16 +52,25 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN)
   @Post('librarian')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'Kutubxonachi qo`shish'
+    })
   createLibrarian(@Body() userAdminDto: CreateUserDto) {
     return this.userService.createUser(userAdminDto, Roles.LIBRARIAN);
   }
 
   @Post('reader')
+  @ApiOperation({
+      summary:'O`quvchi royxatdan otish'
+    })
   signUp(@Body() userAdminDto: CreateUserDto) {
     return this.userService.createUser(userAdminDto, Roles.READER);
   }
 
   @Post('signin')
+  @ApiOperation({
+      summary:'Sigin in'
+    })
   signin(
     @Body() signInDto: SignInDto,
     @Res({ passthrough: true }) res: Response,
@@ -67,11 +79,17 @@ export class UserController {
   }
 
   @Post('token')
+  @ApiOperation({
+      summary:'Token olish'
+    })
   newToken(@CookieGetter('adminToken') token: string) {
     return this.authService.newToken(this.userService.getRepository, token);
   }
 
   @Post('signout')
+  @ApiOperation({
+      summary:'Chiqish'
+    })
   signOut(
     @CookieGetter('adminToken') token: string,
     @Res({ passthrough: true }) res: Response,
@@ -88,6 +106,9 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN)
   @Get('findall')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'Userlar royxatini korish'
+    })
   findAll() {
     return this.userService.findAll({
       relations: { borrows: true, histories: true },
@@ -109,6 +130,9 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN)
   @Get(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'GetByid user'
+    })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.findOneById(id, {
       relations: { borrows: true, histories: true },
@@ -120,6 +144,9 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN)
   @Patch(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'Updatae user'
+    })
   update(
     @GetRequestUser('user') user: IToken,
     @Param('id', ParseUUIDPipe) id: string,
@@ -132,6 +159,9 @@ export class UserController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN)
   @Delete(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+      summary:'Delete user'
+    })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.userService.getRepository.findOne({
       where: { id },

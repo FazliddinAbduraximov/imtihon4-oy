@@ -99,6 +99,7 @@ export class UserService
     await this.tokenService.writeCookie(res, 'adminToken', refreshToken, 15);
     return successRes({ token: accessToken });
   }
+  
   async updateUser(
     id: string,
     updateUserDto: UpdateUserDto,

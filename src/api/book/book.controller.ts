@@ -19,12 +19,15 @@ export class BookController {
   @Post()
   @ApiBearerAuth()
   @ApiOperation({
-    summary:'Yangi kitob qoshish',
+    summary: 'Yangi kitob qoshish',
   })
   create(@Body() dto: CreateBookDto) {
     return this.bookService.create(dto);
   }
 
+  @ApiOperation({
+    summary: 'Kitoblar royxatini korish'
+  })
   @Get('getAll')
   findAll() {
     return this.bookService.findAll({ relations: { histories: true, borrows: true } });
@@ -34,6 +37,9 @@ export class BookController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN)
   @Get('bookHistory/:id')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Kitoblar tarixini korish',
+  })
   bookHistory(@Param('id', ParseUUIDPipe) id: string) {
     return this.bookService.bookHistory(id)
   }
@@ -42,26 +48,33 @@ export class BookController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN)
   @Get('statisticUser')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Eng kop buyurtma qilgan foydalanuvchilar',
+  })
   statistikaUser() {
     return this.bookService.statistyUser()
   }
 
   @Get('statisticBook')
+  @ApiOperation({
+    summary: 'Eng kop buyurtma qilgan kitoblar',
+  })
   statistikaBook() {
     return this.bookService.statistyBook()
   }
 
   @Post('query')
+  @ApiOperation({
+    summary: 'title, author, published_year, available fildlar boyicha izlash',
+  })
   querry(@Query() querryDto: QueryBookDto) {
     const { title, author, published_year, available } = querryDto
-
     const where: any = {}
 
     if (title) where.title = ILike(`%${title}%`);
     if (author) where.author = ILike(`%${author}%`);
     if (published_year) where.published_year = published_year;
     if (available) where.available = available;
-
     return this.bookService.query({
       where,
       relations: { histories: true, borrows: true }
@@ -70,6 +83,9 @@ export class BookController {
 
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'GetById book',
+  })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.bookService.findOneById(id, { relations: { histories: true, borrows: true } });
   }
@@ -78,6 +94,9 @@ export class BookController {
   @AccessRoles(Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN)
   @Put(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary:'book update',
+  })
   update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateBookDto) {
     return this.bookService.update(id, dto);
   }
@@ -86,6 +105,9 @@ export class BookController {
   @AccessRoles(Roles.ADMIN, Roles.LIBRARIAN)
   @Delete(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary:'Delete book',
+  })
   delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.bookService.delete(id);
   }

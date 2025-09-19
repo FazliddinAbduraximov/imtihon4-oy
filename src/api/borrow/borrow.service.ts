@@ -22,10 +22,8 @@ export class BorrowService {
   ) {}
 
   async borrowBook(bookId: string, userId: string) {
-    console.log(userId, bookId)
     return this.dataSource.transaction(async (manager) => {
       const user = await manager.findOne(User, {
-        
         where: { id: userId },
         relations: ['borrows'],
       });
@@ -35,8 +33,8 @@ export class BorrowService {
       if (!book || !book.available){
         throw new BadRequestException('Book not found or not available');
       }
-      if (user.borrows.length >= 3){
-        throw new BadRequestException('Max 3 books allowed');
+      if (user.borrows.length >= 10){
+        throw new BadRequestException('Max 10 books allowed');
       }
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);

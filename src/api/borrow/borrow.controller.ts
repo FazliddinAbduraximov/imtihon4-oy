@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/common/guard/auth.guard';
 import { RolesGuard } from 'src/common/guard/role.guard';
 import { Roles } from 'src/common/enum';
 import { AccessRoles } from 'src/common/decorator/role.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('borrow')
 export class BorrowController {
@@ -14,6 +14,9 @@ export class BorrowController {
   @AccessRoles( Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN, Roles.READER)
   @Post(':bookId')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary:'Buyurtma qilish'
+  })
   borrowBook(@Param('bookId') bookId: string, @Req() req: any) {
     return this.borrowService.borrowBook(bookId, req.user.id);
   }
@@ -22,6 +25,9 @@ export class BorrowController {
   @AccessRoles( Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN, Roles.READER)
   @Patch(':id/return')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary:'Zakaz'
+  })
   returnBook(@Param('id') id: string) {
     return this.borrowService.returnBook(id);
   }
@@ -30,6 +36,9 @@ export class BorrowController {
   @AccessRoles( Roles.SUPERADMIN, Roles.ADMIN, Roles.LIBRARIAN, Roles.READER, 'ID')
   @Get('my')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary:'mening buyurtmalarim'
+  })
   Borrows(@Req() req: any) {
     return this.borrowService.myBorrows(req.user.id);
   }
