@@ -73,8 +73,9 @@ export class BookController {
 
     if (title) where.title = ILike(`%${title}%`);
     if (author) where.author = ILike(`%${author}%`);
-    if (published_year) where.published_year = published_year;
+    if (published_year && (published_year>0 && published_year<2025)) where.published_year = published_year;
     if (available) where.available = available;
+    console.log(where)
     return this.bookService.query({
       where,
       relations: { histories: true, borrows: true }

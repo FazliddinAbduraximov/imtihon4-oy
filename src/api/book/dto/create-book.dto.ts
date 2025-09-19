@@ -2,22 +2,22 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateBookDto {
-    @ApiProperty({example:'Daftar hoshiyasidagi bitiklar'})
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     title: string;
 
-    @ApiProperty({example:"O'tkir Hoshimov"})
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     author: string;
 
-    @ApiProperty({example:2014})
+    @ApiProperty()
     @IsNumber()
     @IsOptional()
     published_year: number;
 
-    @ApiProperty({example:true})
+    @ApiProperty()
     @IsBoolean()
     @IsOptional()
     available: boolean;
