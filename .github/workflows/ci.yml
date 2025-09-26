@@ -5,10 +5,10 @@ on:
 
 jobs:
   Repositoriyani_yuklash:
-  runs-on: ubuntu-latest
-  steps:
-  - name: Repositoriyni githabga yuklash
-    uses: actions/checkout
+      runs-on: ubuntu-latest
+      steps:
+         - name: Repositoriyni githabga yuklash
+           uses: actions/checkout
 
-  - name: node js ornatish
-    uses: actions/setup-node
+         - name: node js ornatish
+           uses: actions/setup-node
