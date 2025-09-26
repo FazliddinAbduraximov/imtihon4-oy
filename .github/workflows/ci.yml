@@ -1,0 +1,14 @@
+name: CI
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Repositoriyani_yuklash:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Repositoriyni githabga yuklash
+    uses: action/checkout
+
+  - name: node js ornatish
+    uses: action/setup-node
