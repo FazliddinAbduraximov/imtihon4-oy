@@ -8,7 +8,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
   - name: Repositoriyni githabga yuklash
-    uses: action/checkout
+    uses: actions/checkout
 
   - name: node js ornatish
-    uses: action/setup-node
+    uses: actions/setup-node
