@@ -1,17 +1,21 @@
-name: CI
+name: loyihani testlash
 on:
   push:
-    branches: [main]
+    branches: [main,dev]
 
 jobs:
-  Repositoriyani_yuklash:
+  clone:
       runs-on: ubuntu-latest
       steps:
-         - name: Repositoriyni githabga yuklash
-           uses: actions/checkout@v3
+        - name: githabga loyihani yuklash 
+          uses: actions/checkout@v4
 
-         - name: node js ornatish
-           uses: actions/setup-node@v3
-           with:
-            node-version: 18
+        - name: Lunixmi
+          run: uname -s
+
+        - name: node_modules'in ornatish
+          run: npm i
+        
+        - name: Build qilish
+          run: npm run build
 
