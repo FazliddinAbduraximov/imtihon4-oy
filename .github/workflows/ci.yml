@@ -5,7 +5,7 @@ on:
 
 jobs:
   clone:
-      runs-on: windows-latest
+      runs-on: ubuntu-latest
       steps:
         - name: githabga loyihani yuklash 
           uses: actions/checkout@v4
