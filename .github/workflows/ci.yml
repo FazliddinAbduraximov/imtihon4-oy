@@ -66,5 +66,11 @@ jobs:
     needs: install_node_modules
     runs-on: ubuntu-latest
     steps:
+      - name: Repositoriyani yuklash
+        uses: actions/checkout@v4
+
+      - name: node_modules ornatish
+        run: npm i
+
       - name: Build qilish
         run: npm run build
