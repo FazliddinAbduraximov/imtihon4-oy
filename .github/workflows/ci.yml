@@ -10,6 +10,12 @@ jobs:
         - name: githabga loyihani yuklash 
           uses: actions/checkout@v4
 
+        - name: nodejsni ornatish
+          uses: actions/setup-node@v5
+
+        - name: nodejs versiyasini tekshirish
+          run: node -v
+
         - name: Lunixmi
           run: uname -s
 
